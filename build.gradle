@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.demo'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0'
 sourceCompatibility = '11'
 
 configurations {
@@ -28,6 +28,24 @@ dependencies {
     testImplementation 'io.projectreactor:reactor-test'
 }
 
-test {
-    useJUnitPlatform()
+task buildUi(type: Exec) {
+    workingDir "${projectDir}/ui"
+    commandLine 'yarn', 'build'
+    doLast {
+        println "UI build completed!"
+    }
+}
+
+task cleanBuild(type: GradleBuild) {
+    tasks = ['clean', 'buildUi', 'build']
+}
+
+bootJar {
+    from('./ui/dist/ui') {
+        into 'public'
+    }
+}
+
+bootRun {
+    systemProperties = System.properties
 }
