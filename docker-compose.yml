@@ -1,0 +1,18 @@
+version: '3.6'
+services:
+  reactiveweb:
+    build: .
+    image: service
+    container_name: "myservice"
+    ports:
+      - "8080:8080"
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo:latest
+    container_name: "mongodb"
+    ports:
+      - 27017:27017
+    command: mongod
