@@ -43,25 +43,24 @@ class CustomerRestController {
 
     @GetMapping("/customer")
     public Flux<Customer> getCustomers() {
-        log.info("get customers request!");
+        log.info("Getting customers!");
         return repo.findAll();
     }
 
     @PostMapping("/customer")
-    public void save(@RequestBody Customer customer) {
-        log.info("save request: {}", customer);
-        repo.save(customer).subscribe();
+    public Mono<Customer> saveCustomer(@RequestBody Customer customer) {
+        log.info("Saving customer: {}", customer);
+        return repo.save(customer);
     }
 
     @DeleteMapping(value = "/customer/{id}")
-    public void deleteCustomer(@PathVariable String id) {
+    public Mono<Void> deleteCustomer(@PathVariable String id) {
         log.info("Deleting customer: {}", id);
-        repo.deleteById(id);
+        return repo.deleteById(id);
     }
 
     @GetMapping("/time")
     public Mono<LocalDateTime> getTime() {
-        log.info("hello world request!");
         return Mono.just(LocalDateTime.now());
     }
 }

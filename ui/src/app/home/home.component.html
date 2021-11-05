@@ -1,19 +1,68 @@
-<clr-main-container>
-  <clr-header>
-    <div class="branding">
-      <a href="#" class="nav-link">
-        <span class="title">My App</span>
-      </a>
-    </div>
-    <div class="header-nav" [clr-nav-level]="1">
-      <a class="nav-link" href="#" [routerLink]="['/home']" routerLinkActive="active"><span class="nav-text">Home</span></a>
-    </div>
-    <div class="header-actions">
-    </div>
-  </clr-header>
-  <div class="content-container">
-    <div class="content-area">
-      <router-outlet></router-outlet>
+<div class="content-container">
+  <div class="content-area">
+
+    <div class="clr-row">
+
+      <div class="clr-col-12">
+        <p style="text-align: center">
+          <!-- interpolation & pipe -->
+          Server Time: {{currentTime | date:'dd-MM-yyyy' }}
+        </p>
+
+        <h2 style="text-align: center">Customers</h2>
+
+        <clr-datagrid>
+          <clr-dg-placeholder class="content-center">No Customers!</clr-dg-placeholder>
+          <clr-dg-column [clrDgField]="'id'">ID</clr-dg-column>
+          <clr-dg-column [clrDgField]="'firstName'">First Name</clr-dg-column>
+          <clr-dg-column [clrDgField]="'lastName'">Last Name</clr-dg-column>
+          <clr-dg-column [clrDgField]="'city'">City</clr-dg-column>
+          <clr-dg-column>Action</clr-dg-column>
+          <!-- structural directive -->
+          <clr-dg-row clr-dg-row *clrDgItems="let customer of customers">
+            <clr-dg-cell>{{customer.id}}</clr-dg-cell>
+            <clr-dg-cell>{{customer.firstName}}</clr-dg-cell>
+            <clr-dg-cell>{{customer.lastName}}</clr-dg-cell>
+            <clr-dg-cell>{{customer.city}}</clr-dg-cell>
+            <clr-dg-cell>
+              <cds-icon shape="trash" style="cursor: pointer; color: blue" (click)="deleteCustomer(customer)">
+              </cds-icon>
+            </clr-dg-cell>
+          </clr-dg-row>
+          <clr-dg-footer>{{customers.length}} customers</clr-dg-footer>
+        </clr-datagrid>
+
+        <div class="clr-col-12">
+          <form class="clr-form clr-form-horizontal">
+            <div class="clr-form-control">
+              <label for="firstName" class="clr-control-label">First Name</label>
+              <div class="clr-control-container">
+                <div class="clr-input-wrapper">
+                  <!-- two way data binding -->
+                  <input type="text" [(ngModel)]="customer.firstName" id="firstName" name="firstName"
+                         placeholder="Placeholder" class="clr-input"/>
+                </div>
+              </div>
+            </div>
+            <div class="clr-form-control">
+              <label for="lastName" class="clr-control-label">Last Name</label>
+              <div class="clr-control-container">
+                <div class="clr-input-wrapper">
+                  <input [(ngModel)]="customer.lastName" type="text" id="lastName" name="lastName"
+                         placeholder="Placeholder" class="clr-input"/>
+                </div>
+              </div>
+            </div>
+            <div class="clr-form-control">
+              <div class="clr-control-container">
+                <!-- event binding -->
+                <button type="submit" class="btn btn-primary" (click)="saveCustomer()">Save</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </div>
     </div>
   </div>
-</clr-main-container>
+</div>

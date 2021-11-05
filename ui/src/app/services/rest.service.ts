@@ -11,11 +11,19 @@ export class RestService {
   constructor(private http: HttpClient) {
   }
 
-  public getCustomers(): Observable<any> {
-    return this.http.get('/api/customers');
+  public getCustomers(): Observable<Customer[]> {
+    return this.http.get<Customer[]>('/api/customer');
   }
 
   public saveCustomer(customer: Customer) {
-    return this.http.post('/api/customers', customer);
+    return this.http.post('/api/customer', customer);
+  }
+
+  public deleteCustomer(id: any): Observable<any> {
+    return this.http.delete('/api/customer/' + id);
+  }
+
+  public getTime(): Observable<string> {
+    return this.http.get<string>('/api/time');
   }
 }
