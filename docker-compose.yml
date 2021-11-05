@@ -1,18 +1,21 @@
 version: '3.6'
 services:
-  reactiveweb:
+  project60-app:
     build: .
-    image: service
-    container_name: "myservice"
+    image: project60
+    container_name: "project60-app"
     ports:
       - "8080:8080"
     links:
-      - mongodb
+      - project60-mongodb
     depends_on:
-      - mongodb
-  mongodb:
+      - project60-mongodb
+  project60-mongodb:
     image: mongo:latest
-    container_name: "mongodb"
+    container_name: "project60-mongodb"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "test"
+      MONGO_INITDB_ROOT_PASSWORD: "test@123"
     ports:
       - 27017:27017
     command: mongod
