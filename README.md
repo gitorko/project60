@@ -58,3 +58,11 @@ java -jar project60-1.0.0.jar
 ```
 
 Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
+
+```bash
+docker build -f docker/Dockerfile --force-rm -t project60:1.0.0 .
+docker images
+docker-compose -f docker/docker-compose.yml up 
+docker tag project60:1.0.0 gitorko/project60:1.0.0
+docker push gitorko/project60:1.0.0
+```
