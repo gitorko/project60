@@ -68,3 +68,46 @@ docker tag project60:1.0.0 gitorko/project60:1.0.0
 docker push gitorko/project60:1.0.0
 docker-compose -f docker/docker-compose.yml up
 ```
+
+## Commands
+
+```bash
+ng new ui
+cd ui
+yarn add @cds/core @clr/icons @clr/angular @clr/ui
+```
+
+proxy.config.json redirects the client calls
+
+```json
+{
+  "/api/*": {
+    "target": "http://localhost:8080/",
+    "secure": false,
+    "logLevel": "debug"
+  }
+}
+```
+
+Modify package.json file, change the start & build command to
+
+```bash
+"start": "ng serve --proxy-config proxy.config.json --open",
+"build": "ng build --prod",
+```
+
+Update the routing.The useHash:true will be useful when we deploy the application in a single uber jar later. 
+If we dont use this then the back button on the application will run into errors. It uses a hash based routing instead of the default location based routing.
+
+If you run into the error
+
+```bash
+Error: initial exceeded maximum budget.
+```
+
+Update the budget in angular.json file
+
+```
+"maximumWarning": "4mb",
+"maximumError": "5mb"
+```
