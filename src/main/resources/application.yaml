@@ -8,3 +8,4 @@ spring:
       password: test@123
       host: localhost
       port: 27017
+      authentication-database: admin
